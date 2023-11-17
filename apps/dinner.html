@@ -1,0 +1,22 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: dinner
+  namespace: flux-system
+spec:
+  chart:
+    spec:
+      chart: 12factor
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: lalyos
+  install:
+    createNamespace: true
+  interval: 1m0s
+  targetNamespace: lalyos
+  values:
+    color: gray
+    title: Dinner for lalyos
+    body: <iframe src="https://giphy.com/embed/8cOkSOuvIChHNYOyP7" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/love-coffee-drink-8cOkSOuvIChHNYOyP7">via GIPHY</a></p>
