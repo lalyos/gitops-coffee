@@ -17,5 +17,5 @@ spec:
   interval: 1m0s
   targetNamespace: lalyos
   values:
-    color: lightgreen
-    title: CoffeBreak for lalyos
+    color: green
+    title: Menjunk Haza most
