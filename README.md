@@ -52,19 +52,43 @@ Repeate previous commands with `--export > xxx.yaml` and put into a git repo:
   - kustomization(standard)
 
 ```
-k apply -k http://github.com/user/gitops
+k apply -k https://github.com/lalyos/gitops-coffee.git/?ref=stage2
 ```
 
 ### Stage-3: manual git-source + kustomization(flux)
 
-
+[sample git repo](https://github.com/lalyos/gitops-coffee/tree/stage2)
 
 ```
-flux create source git gitops-coffee \
+flux create source git gitops-coffee-stage2 \
   --url https://github.com/lalyos/gitops-coffee.git \
-  --branch master
+  --branch stage2
 
-flux create kustomization coffee \
-  --source gitrepository/gitops-coffee
+flux create kustomization coffee-stage2 \
+  --source gitrepository/gitops-coffee-stage2
 ```
 
+List all related flux Custom Resources:
+```
+flux tree kustomization coffee-stage2
+```
+
+### Stage-4 combined git-source + kustomization from git repo
+
+
+combine the 2 previous commands `--export` output into 1 single `gitops-stage3.yaml`
+and add it to the repo.
+[sample git repo](https://github.com/lalyos/gitops-coffee/tree/stage3)
+
+```
+k apply -f https://raw.githubusercontent.com/lalyos/gitops-coffee/stage3/gitops-stage3.yaml
+```
+
+### Stage-5: every yaml in git repo:
+
+- app
+  - HelmRepo
+  - HelmRelease
+- infra
+  - GitSource (for itself)
+  - Kustomization (flux, pointing to app dir)
